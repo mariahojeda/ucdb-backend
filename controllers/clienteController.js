@@ -1,4 +1,4 @@
-const Cliente = require('../models/Cliente');
+const Cliente = require('../models/clienteModel');
 
 // ✅ POST - Cadastrar cliente (status 200 sem resposta no corpo)
 exports.createCliente = async (req, res) => {
@@ -23,7 +23,6 @@ exports.createCliente = async (req, res) => {
     const createdCliente = await cliente.save();
     console.log('✅ Cliente criado com ID:', createdCliente._id);
     
-    // Conforme especificado: status 200 sem corpo de resposta
     res.status(200).send();
     
   } catch (error) {
