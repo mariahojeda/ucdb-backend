@@ -39,12 +39,12 @@ app.get('/health', (req, res) => {
 });
 
 // Iniciar o servidor
-app.listen(PORT, '0.0.0.0', () => {  
+app.listen(PORT, () => {
   console.log('\n' + '='.repeat(50));
   console.log('🚀 API DE CLIENTES - INICIADA COM SUCESSO!');
   console.log('='.repeat(50));
-  console.log(`📊 Servidor: http://0.0.0.0:${PORT}`);
-  console.log(`❤️  Health: http://0.0.0.0:${PORT}/health`);
+  console.log(`📊 Servidor rodando na porta: ${PORT}`);
+  console.log(`❤️  Health Check disponível`);
   console.log('='.repeat(50));
   console.log('⏰', new Date().toLocaleString('pt-BR'));
   console.log('='.repeat(50) + '\n');
