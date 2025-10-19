@@ -1,19 +1,17 @@
 const mongoose = require('mongoose');
 
 function connectToDatabase() {
-  // String de conexão do MongoDB Atlas
-  const MONGODB_URI = 'mongodb+srv://mariahojedacodigos_db_user:IW82cOcaUKHnlmJp@cluster0.q1zljcl.mongodb.net/clientesdb';
+  // ✅ STRING DE CONEXÃO ATUALIZADA
+  const MONGODB_URI = 'mongodb+srv://mariahojeda_db_user:eW76iraGTo7semYR@cluster0.onmwolw.mongodb.net/clientesdb';
   
   console.log('🔗 Conectando ao MongoDB Atlas...');
 
-  // Configurações otimizadas para Render
+  // ✅ CONFIGURAÇÕES ATUALIZADAS - Removendo opções obsoletas
   const mongooseOptions = {
-    useNewUrlParser: true, 
-    useUnifiedTopology: true,
     serverSelectionTimeoutMS: 30000,  // ✅ 30 segundos para seleção do servidor
     socketTimeoutMS: 45000,           // ✅ 45 segundos para timeout do socket
-    bufferCommands: false,            // ✅ Desativa buffering para evitar timeout
-    bufferMaxEntries: 0,              // ✅ Desativa buffering de operações
+    maxPoolSize: 10,                  // ✅ Número máximo de conexões
+    minPoolSize: 1,                   // ✅ Número mínimo de conexões
   };
 
   mongoose.connect(MONGODB_URI, mongooseOptions)
@@ -28,10 +26,11 @@ function connectToDatabase() {
       console.log('   - Conexão com internet');
       console.log('   - String de conexão do MongoDB');
       console.log('   - Whitelist de IPs no MongoDB Atlas');
+      console.log('   - Credenciais de acesso');
       process.exit(1);
     });
 
-  // ✅ Eventos de conexão para melhor debug e tratamento de erros
+  // ✅ EVENTOS DE CONEXÃO PARA DEBUG
   mongoose.connection.on('connecting', () => {
     console.log('🔄 Conectando ao MongoDB...');
   });
@@ -52,7 +51,7 @@ function connectToDatabase() {
     console.log('❌ Erro na conexão MongoDB:', err.message);
   });
 
-  // ✅ Tratamento para sinais de graceful shutdown
+  // ✅ TRATAMENTO PARA SHUTDOWN GRACEFUL
   process.on('SIGINT', async () => {
     try {
       await mongoose.connection.close();
