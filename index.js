@@ -38,19 +38,7 @@ app.get('/health', (req, res) => {
   });
 });
 
-// Localhost
-app.listen(PORT, () => {
-  console.log('\n' + '='.repeat(50));
-  console.log('🚀 API DE CLIENTES - INICIADA COM SUCESSO!');
-  console.log('='.repeat(50));
-  console.log(`📊 Servidor: http://localhost:${PORT}`);
-  console.log(`❤️  Health: http://localhost:${PORT}/health`);
-  console.log('='.repeat(50));
-  console.log('⏰', new Date().toLocaleString('pt-BR'));
-  console.log('='.repeat(50) + '\n');
-});
-
-// Render
+// Iniciar o servidor
 app.listen(PORT, '0.0.0.0', () => {  
   console.log('\n' + '='.repeat(50));
   console.log('🚀 API DE CLIENTES - INICIADA COM SUCESSO!');
