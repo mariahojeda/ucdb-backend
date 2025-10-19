@@ -1,0 +1,235 @@
+swagger: "2.0"
+info:
+  title: "Clientes API"
+  description: "API RESTful para CRUD de clientes - Sistema de Gerenciamento"
+  version: "1.0.0"
+  contact:
+    name: "Mariah Ojeda"
+    email: "mariahojeda@live.com"
+    url: "https://www.linkedin.com/in/mariahojeda/"
+basePath: "/"
+schemes:
+  - "http"
+  - "https"
+consumes:
+  - "application/json"
+produces:
+  - "application/json"
+
+definitions:
+  Cliente:
+    type: "object"
+    properties:
+      _id:
+        type: "string"
+        description: "ID único do cliente"
+      nome:
+        type: "string"
+        description: "Nome do cliente"
+      sobreNome:
+        type: "string"
+        description: "Sobrenome do cliente"
+    required:
+      - "nome"
+      - "sobreNome"
+  
+  ClienteInput:
+    type: "object"
+    properties:
+      nome:
+        type: "string"
+        description: "Nome do cliente"
+      sobreNome:
+        type: "string"
+        description: "Sobrenome do cliente"
+    required:
+      - "nome"
+      - "sobreNome"
+
+  ClienteUpdate:
+    type: "object"
+    properties:
+      nome:
+        type: "string"
+        description: "Nome do cliente"
+      sobreNome:
+        type: "string"
+        description: "Sobrenome do cliente"
+
+  SuccessResponse:
+    type: "object"
+    properties:
+      message:
+        type: "string"
+
+  ErrorResponse:
+    type: "object"
+    properties:
+      error:
+        type: "string"
+      message:
+        type: "string"
+
+paths:
+  /clientes:
+    get:
+      summary: "Listar todos os clientes"
+      description: "Retorna uma lista com todos os clientes cadastrados"
+      tags:
+        - "Clientes"
+      responses:
+        "200":
+          description: "Lista de clientes retornada com sucesso"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Cliente"
+          examples:
+            application/json:
+              - _id: "507f1f77bcf86cd799439011"
+                nome: "João"
+                sobreNome: "Silva"
+              - _id: "507f1f77bcf86cd799439012"
+                nome: "Maria"
+                sobreNome: "Santos"
+        "500":
+          description: "Erro interno do servidor"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+    post:
+      summary: "Cadastrar novo cliente"
+      description: "Cria um novo cliente no sistema"
+      tags:
+        - "Clientes"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Dados do cliente para cadastro"
+          required: true
+          schema:
+            $ref: "#/definitions/ClienteInput"
+          examples:
+            application/json:
+              nome: "João"
+              sobreNome: "Silva"
+      responses:
+        "200":
+          description: "Cliente cadastrado com sucesso (sem corpo de resposta)"
+        "400":
+          description: "Dados inválidos"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        "500":
+          description: "Erro interno do servidor"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+  /clientes/{id}:
+    get:
+      summary: "Buscar cliente por ID"
+      description: "Retorna os dados de um cliente específico"
+      tags:
+        - "Clientes"
+      parameters:
+        - in: "path"
+          name: "id"
+          description: "ID do cliente"
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "Cliente encontrado"
+          schema:
+            $ref: "#/definitions/Cliente"
+        "404":
+          description: "Cliente não encontrado"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        "500":
+          description: "Erro interno do servidor"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+    put:
+      summary: "Atualizar cliente"
+      description: "Atualiza os dados de um cliente existente"
+      tags:
+        - "Clientes"
+      parameters:
+        - in: "path"
+          name: "id"
+          description: "ID do cliente a ser atualizado"
+          required: true
+          type: "string"
+        - in: "body"
+          name: "body"
+          description: "Dados atualizados do cliente"
+          required: true
+          schema:
+            $ref: "#/definitions/ClienteUpdate"
+          examples:
+            application/json:
+              nome: "João"
+              sobreNome: "de Souza"
+      responses:
+        "200":
+          description: "Cliente atualizado com sucesso"
+          schema:
+            $ref: "#/definitions/Cliente"
+        "400":
+          description: "Dados inválidos"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        "404":
+          description: "Cliente não encontrado"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        "500":
+          description: "Erro interno do servidor"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+    delete:
+      summary: "Remover cliente"
+      description: "Remove um cliente do sistema"
+      tags:
+        - "Clientes"
+      parameters:
+        - in: "path"
+          name: "id"
+          description: "ID do cliente a ser removido"
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "Cliente removido com sucesso (sem corpo de resposta)"
+        "404":
+          description: "Cliente não encontrado"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        "500":
+          description: "Erro interno do servidor"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+  /health:
+    get:
+      summary: "Health Check"
+      description: "Verifica o status da API e conexão com o banco"
+      tags:
+        - "System"
+      responses:
+        "200":
+          description: "API funcionando corretamente"
+          schema:
+            type: "object"
+            properties:
+              status:
+                type: "string"
+              message:
+                type: "string"
+              timestamp:
+                type: "string"
+              database:
+                type: "string"

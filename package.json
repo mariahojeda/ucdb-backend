@@ -1,0 +1,29 @@
+{
+  "name": "api-clientes",
+  "version": "1.0.0",
+  "description": "API RESTful para CRUD de clientes",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "api",
+    "rest",
+    "crud",
+    "clientes",
+    "mongodb"
+  ],
+  "author": "Mariah Ojeda",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "express": "^4.21.2",
+    "mongoose": "^7.8.7"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}
